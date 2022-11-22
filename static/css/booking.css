@@ -1,0 +1,37 @@
+.cabimg{
+    position: absolute;
+    z-index: 1;
+    opacity: 0.3;
+    height: 600px;
+    width: 100%;
+}
+#cabtable{
+    height: 250px;
+    overflow: hidden;
+}
+#pageele{
+    position: relative;
+    z-index: 4;
+}
+#pageele li{
+    background-color: white;
+}
+body{
+    overflow-x: hidden;
+}
+#footer{
+    z-index: 4;
+    margin-top: -200px;
+}
+#cabtable{
+    margin-top:130px ;
+    z-index: 4;
+    width: 100%;
+}
+footer{
+    position: relative;
+    margin-top: 300px;
+}
+.hide{
+    display: none;
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Cab</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/index.css">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+{{>navbar}}
+<div class="cabbody mt-4">
+    <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
+    <div>
+    <div class="cabinfo shadow-lg">
+        <img src="/static/css/taxi-featured-scaled.jpeg" alt="" width="620px" class="cabimg" style="position: relative; z-index: 2; opacity: 0.6;">
+        <div class="cabbox" style="margin: 0; padding: 0;">
+        <p class="h4">
+        Providing Cab Services Since 1800s
+        </p>
+        </div>
+    </div>
+    </div>
+    <div class="cabbox shadow-lg" style="float: right;background-color: rgb(104, 191, 201,0.6);">
+        <div class="cabhead">
+            <p class="display-6" style="text-align:center;">Search Cabs</p>
+            <form action="" onsubmit="validate(event)" id="srch">
+            <div class="ms-5 mb-2">
+            <input type="search" class="input-sm rounded-2 border border-0" name="pickup" id="pickup" placeholder="Pick Up" required>
+            </div>
+            <div class="ms-5">
+            <input type="search" class="input-sm mb-2 rounded-2 border border-0" name="dest" id="dest" placeholder="Destination" required>
+            </div>
+            <div class="ms-5">
+            <p id="error"></p>
+            </div>
+            <input type="submit" class="btn btn-info" style="margin: 10px 100px;">
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container row justify-content-between" id="aboutus">
+    <div class="item col-6 rounded-4  shadow-lg ms-5" >
+        <p>
+            Arju-Cabs was started in the year 2010 in the city of Cochin to provide quality vehicle rental service and has been since catering to thousands of tourist, businessmen, corporates, instutions etc. with varied transport solutions ranging from daily vehicle rentals of budget to premium luxury vehicles and further to holiday & business trips including corporate transport solutions</p>
+
+    </div>
+    <div class="item col-5" style="background-color: rgb(232, 232, 232,0);">
+        <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" width="500px" class="rounded-4">
+    </div>
+    <div class="container ms-5 h5 bg-dark text-light my-5 py-2 rounded-4 pe-1">
+    <div class="row border-bottom p-1">
+        <p class="col">Delhi</p>
+        <p class="col">Pune</p>
+        <p class="col">Mumbai</p>
+        <p class="col">Kolkata</p>
+        <p class="col">Hyderabad</p>
+    </div>
+    <div class="row border-bottom p-2">
+        <p class="col">Kochi</p>
+        <p class="col">Bangalore</p>
+        <p class="col">Trivandrum</p>
+        <p class="col">Chennai</p>
+        <p class="col">Harayana</p>
+    </div>
+    <div class="row p-1">
+        <p class="col">Singapore</p>
+        <p class="col">Bangkok</p>
+        <p class="col">Pune</p>
+        <p class="col">Ahmedabad</p>
+        <p class="col">Male</p>
+    </div>
+    </div>
+</div>
+{{>footer}}
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="/static/scripts/main.js"></script>
+</body>
+
+</html>

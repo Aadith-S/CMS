@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Cab</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/signup.css">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+{{>navbar}}
+<div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
+    <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
+	<div class="w-50 d-inline-block py-3 shadow-lg rounded-4 border border-2 "id="cablogin">
+	<div class="py-3">
+		<p class="h1 text-center">Sign Up</p>
+	</div>
+	<div class="row" >
+		<div class="col-sm-6 offset-sm-3">
+			<form onsubmit="validate(event);" id="loginForm" action="" method="post">
+				<div>
+					<input type="text" class="form-control border border-bottom-3 mb-2 shadow-sm" name="firstName" id="firstName" placeholder="First Name">
+				</div>
+                <div>
+					<input type="text" class="form-control border border-bottom-3 mb-2 shadow-sm" name="lastName" id="lastName" placeholder="Last Name">
+				</div>
+                <div class="my-2 ms-1">
+                    <label for="Gender" class="me-2">Gender :</label>
+                    <input type="radio" name="Gender" id="Male" value="1">Male
+                    <input type="radio" name="Gender" id="Female" value="0">Female
+                </div>
+                <div class="ms-1">
+                    <label for="addr">Address :</label>
+                    <textarea name="addr" id="addr" cols="36" rows="5" placeholder="Your Address"style="border-width:2px" class="mt-2"></textarea> 
+                </div>
+                <div>
+                    <label for="dob">DOB :</label>
+                    <input type="date" name="dob" id="dob" >
+                </div>
+                <div>
+					<input type="text" class="form-control border border-bottom-3 my-2 shadow-sm" name="pNo" id="pNo" placeholder="Phone Number">
+				</div>
+                <div>
+					<input type="text" class="form-control border border-bottom-3 my-2 shadow-sm" name="email" id="email" placeholder="Email">
+				</div>
+                <div class="">
+					<input type="text" class="form-control border border-bottom-3 my-2 shadow-sm" name="userName" id="userName" placeholder="Username">
+                </div>
+                <div class="">
+					<input type="password" class="form-control border border-bottom-3 my-2 shadow-sm" name="pass" id="pass" placeholder="Password" minlength="8">
+                </div>
+                <div class="">
+					<input type="password" class="form-control border border-bottom-3 my-2 shadow-sm" name="conpass" id="conpass" placeholder="Confirm Password" minlength="8">
+                </div>
+                <p id="error"></p>
+                <div><label for="pref">Yes i agree to the <span class="text-info">terms and conditions</span></label>
+                <input type="checkbox" name="Pref" id="mail">
+                </div>
+				<div  class="d-grid gap-2 col-6 mx-auto my-2 " >
+					<input class="btn btn-primary" type="submit" value="Create Account" id="btnLogin">
+				</div>
+			</form>
+		</div>
+	</div>
+	</div>
+</div>
+{{>footer}}
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script src="/static/scripts/signup.js"></script>
+</body>
+
+</html>
