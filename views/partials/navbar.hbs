@@ -20,10 +20,13 @@
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle " href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="pimg" class="rounded-5" src="/static/css/person.png" alt="" height="30px"></a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
-                    <a class="loggedin hide" href="#" >Profile</a>
-                    <a class="dropdown-item loggedout" href="/login" >Log In</a>
-                    <a class="dropdown-item loggedout" href="/signup">Sign Up</a>
-                    <a class="loggedin hide" href="#" onclick="logout();">Logout</a>
+                    {{#if isAuthenticated}}
+                    <a class="dropdown-item" href="/profile" >Profile</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    {{else}}
+                    <a class="dropdown-item" href="/login">Log In</a>
+                    <a class="dropdown-item" href="/signup">Sign Up</a>
+                    {{/if}}
                 </div>
             </div>
         </div>

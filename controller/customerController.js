@@ -2,7 +2,7 @@ const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 function authentication(uname,pass)
 {   return new Promise((resolve, reject) =>{
-    db.Customer.findAll({where : {
+    db.Customer.findOne({where : {
         user_name : uname,
         password : pass
         },
@@ -14,7 +14,7 @@ function authentication(uname,pass)
             }
             else{
             console.log("Logged In Successfully");
-            resolve();
+            resolve(result.dataValues.user_id);
             }
         }).catch(err=>{
             console.log("Error: " + err);
@@ -51,6 +51,7 @@ function getCab(page){
             else if(page>pages){
                 page = pages;
             }
+            console.table(result);
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
             }
@@ -72,16 +73,16 @@ function driverdetails(cab_no = 1){
 
 module.exports = {
     index : (req,res,next) => {
-    let content = renderTemplate("index",{});
+    let content = renderTemplate("index",{isAuthenticated : req.identity.isAuthenticated});
     res.send(content);},
     login : (req,res)=>{
         console.log(req.body);
         if(req.method == "GET"){
-        let content = renderTemplate("login",{});
+        let content = renderTemplate("login",{isAuthenticated : req.identity.isAuthenticated});
         res.send(content);
         }
         else{
-        authentication(req.body.userName,req.body.passWord).then(()=>res.redirect("/profile")).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
+        authentication(req.body.userName,req.body.passWord).then((id)=>{req.session.user_id=id; res.redirect("/profile")}).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
         res.send(content);});
         }
     },
@@ -110,7 +111,11 @@ module.exports = {
                     currentPage : parseInt(page.page),
                     nextPage : nextPage,
                 }
-                let content = renderTemplate("searchCab",info);
+                let data = {
+                    info : info,
+                    isAuthenticated : req.identity.isAuthenticated
+                }
+                let content = renderTemplate("searchCab",data);
                 res.send(content);
                 })
         }
@@ -125,5 +130,9 @@ module.exports = {
                 res.json(result.dataValues);
             });
         }
+    },
+    logout : (req,res)=>{
+        req.session.user_id = null;
+        res.redirect("/login");
     }
 }

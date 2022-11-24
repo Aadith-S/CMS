@@ -3,7 +3,7 @@ const renderTemplate = require("../views/view")
 
 function userUpdate(user_id,details){
     return new Promise((res,rej)=>{
-    db.Customer.update(details,{where :{user_id : user_id}}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
+    db.Customer.update(details,{where :{user_id :user_id}}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
         rej(err);
     })
     })
@@ -11,7 +11,7 @@ function userUpdate(user_id,details){
 
 function deleteUser(user_id){
     return new Promise((res,rej)=>{
-        db.Customer.destroy({where: {user_id: user_id}}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
+        db.Customer.destroy({where: {user_id:user_id }}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
             rej(err);
     })
     })
@@ -39,34 +39,38 @@ function booking(details){
 
 module.exports = {
     profile : (req,res)=>{
-        let content = renderTemplate('profile',{});
-        res.send(content);
+            let info = {
+                info : req.identity.user,
+                isAuthenticated : req.identity.isAuthenticated
+            }
+            let content = renderTemplate('profile',info);
+            res.send(content);
     },
     update : (req,res)=>{
         if(req.method == 'POST'){
-            userUpdate(req.query.user_id,req.body).then((result)=>{
-                res.send(result);
+            userUpdate(req.session.user_id,req.body).then((result)=>{
+                res.redirect("/profile");
             }).catch((err)=>{
                 console.log(err);
             });
         }
         else{
-            let content = renderTemplate("profileUpdate",{});
+            let content = renderTemplate("profileUpdate",{isAuthenticated : req.identity.isAuthenticated});
             res.send(content);
         }
     },
     delete: (req,res)=>{
         if(req.method == 'POST'){
-        deleteUser(req.body.user_id).then((result)=>{res.send(result)}).catch((err)=>{console.log(err);});
+        deleteUser(req.session.user_id).then((result)=>{res.redirect("/signup");}).catch((err)=>{console.log(err);});
         }
         else{
-            let content = renderTemplate("profileDelete",{});
+            let content = renderTemplate("profileDelete",{isAuthenticated : req.identity.isAuthenticated});
             res.send(content);
         }
     },
     bookpage : (req, res) => {
         if(req.method == "GET"){
-            let content = renderTemplate("booking",info);
+            let content = renderTemplate("bookCab",{isAuthenticated : req.identity.isAuthenticated});
                 res.send(content);
         }
         else{

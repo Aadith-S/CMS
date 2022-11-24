@@ -84,7 +84,7 @@ const Driver = sequelize.define("driver",{
     driver_address : {
         type : DataTypes.STRING(100),
         allowNull : false
-    },
+    }
 })
 const Bookride = sequelize.define("bookride",{
     ride_otp :{
@@ -115,15 +115,7 @@ const Bookride = sequelize.define("bookride",{
     cost : {
         type : DataTypes.INTEGER,
         allowNull : false
-    },
-    cab_no : {
-        type : DataTypes.INTEGER,
-        references : {
-            model : "cabs",
-            key : "cab_no"
-        },
-        allowNull : true
-    },
+    }
 })
 module.exports = {
     Customer,

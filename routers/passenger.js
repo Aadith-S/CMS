@@ -6,6 +6,7 @@ router.get("",cc.index)
 router.get("/login",cc.login);
 router.post("/login",cc.login);
 router.get("/signup",cc.signup);
+router.get("/logout",cc.logout);
 router.post("/signup",cc.signup);
 router.get("/searchCabs",cc.bookride);
 router.get("/driverdetails",cc.driverDetails);

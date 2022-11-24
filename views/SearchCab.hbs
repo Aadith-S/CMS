@@ -30,14 +30,14 @@
         </tr>
         </thead>
         <tbody>
-        {{#each data}}
+        {{#each info.data}}
             <tr>
-                <td>{{cab_no}}</td>
-                <td>{{cab_name}}</td>
-                <td>{{cab_description}}</td>
-                <td>{{cab_totalSeating}}</td>
+                <td>{{this.cab_no}}</td>
+                <td>{{this.cab_name}}</td>
+                <td>{{this.cab_description}}</td>
+                <td>{{this.cab_totalSeating}}</td>
                 <td>100</td>
-                <td><a href="?cab_no={{cab_no}}">Book Now</a></td>
+                <td><a href="?cab_no={{this.cab_no}}">Book Now</a></td>
             </tr>
         {{/each}}
         </tbody>
@@ -45,9 +45,9 @@
     </div>
 </div>
     <ul class="pagination ms-5" id="pageele" style="padding-bottom : 50px">
-        <li class="page-item"><a class="page-link" href="?page={{prevPage}}"><<</a></li>
-        <li class="page-item"><a class="page-link" href="?page={{currentPage}}">{{currentPage}}</a></li>
-        <li class="page-item"><a class="page-link" href="?page={{nextPage}}">>></a></li>
+        <li class="page-item"><a class="page-link" href="?page={{info.prevPage}}"><<</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{info.currentPage}}">{{info.currentPage}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{info.nextPage}}">>></a></li>
     </ul>
 {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->

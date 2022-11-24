@@ -16,9 +16,20 @@
 <body>
 {{>navbar}}
 <div class=".container mb-5 mx-5" style="margin-top: 100px;">
+    <div>
+        <div>Profile</div>
+        <div>{{info.f_name}}</div>
+        <div>{{info.l_name}}</div>
+        <div>{{info.user_name}}</div>
+        <div>{{info.email}}</div>
+        <div>{{info.address}}</div>
+        <div>{{info.mobile}}</div>
+    </div>
+    <div>
     <a href="/profile/update">Update</a>
     <a href="/profile/delete">Delete</a>
     <a href="/profile/bookCab">Booking</a>
+    </div>
 </div>
 {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->
