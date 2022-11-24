@@ -43,10 +43,8 @@ function getCab(page){
     return new Promise((res,rej)=>{
         db.Cab.findAll({
         attributes : ["cab_no","cab_name","cab_description","cab_totalSeating"]}).then((result)=>{
-            console.log(result.length);
             let data = [];
             let pages = Math.ceil(result.length/5)
-            console.log(pages);
             if(page<1){
                 page = 1;
             }
@@ -62,26 +60,6 @@ function getCab(page){
             }
             res(body);
         })
-    })
-}
-function cost(date,rideDate){
-    return 100;
-}
-function booking(details){
-    return new Promise((res,req)=>{
-        let date = new Date();
-        console.log(date);
-        let data = {
-            date_of_booking : date,
-            date_of_ride : details.date_of_ride,
-            pickup : details.pickup,
-            dropoff : details.dropoff,
-            ride_time : details.ride_time,
-            cost : cost(date.getUTCDate,details.date_of_ride),
-            cab_no : details.cab_no,
-            user_id : details.user_id
-            }
-            db.Bookride.create(data).then(result => {res(result)}).catch(err => {console.log(err)});
     })
 }
 function driverdetails(cab_no = 1){
@@ -103,7 +81,7 @@ module.exports = {
         res.send(content);
         }
         else{
-        authentication(req.body.userName,req.body.passWord).then(()=>res.redirect("/")).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
+        authentication(req.body.userName,req.body.passWord).then(()=>res.redirect("/profile")).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
         res.send(content);});
         }
     },
@@ -117,34 +95,24 @@ module.exports = {
             }
     },
     bookride : (req, res)=>{
+        let page = {page : 1}
+        console.log(req.query + Object.keys(req.query).length);
         if(req.method == "GET"){
-            let page = req.query;
-            console.log(req.query);
+            if(Object.keys(req.query).length != 0){
+                page = req.query;
+            }
             getCab(parseInt(page.page)).then((body)=>{
-                console.log(body.pages);
-                console.log(body.pages+"hlo");
-                console.log(page.page);
                 let prevPage = page.page<=1?1:parseInt(page.page)-1;
                 let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
-                console.log(nextPage);
                 let info = {
                     data : body.data,
                     prevPage : prevPage,
                     currentPage : parseInt(page.page),
                     nextPage : nextPage,
                 }
-                let content = renderTemplate("booking",info);
+                let content = renderTemplate("searchCab",info);
                 res.send(content);
                 })
-        }
-    },
-    bookpage : (req, res) => {
-        if(req.method == "GET"){
-            let content = renderTemplate("booking",info);
-                res.send(content);
-        }
-        else{
-            booking(req.body).then((result) => {res.send(result)})
         }
     },
     driverDetails : (req,res)=>{

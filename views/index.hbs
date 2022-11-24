@@ -30,17 +30,8 @@
     <div class="cabbox shadow-lg" style="float: right;background-color: rgb(104, 191, 201,0.6);">
         <div class="cabhead">
             <p class="display-6" style="text-align:center;">Search Cabs</p>
-            <form action="" onsubmit="validate(event)" id="srch">
-            <div class="ms-5 mb-2">
-            <input type="search" class="input-sm rounded-2 border border-0" name="pickup" id="pickup" placeholder="Pick Up" required>
-            </div>
-            <div class="ms-5">
-            <input type="search" class="input-sm mb-2 rounded-2 border border-0" name="dest" id="dest" placeholder="Destination" required>
-            </div>
-            <div class="ms-5">
-            <p id="error"></p>
-            </div>
-            <input type="submit" class="btn btn-info" style="margin: 10px 100px;">
+            <form action="/searchCabs" id="srch">
+            <input type="submit" class="btn btn-info" style="margin: 10px 100px; " value="FIND ONE">
             </form>
         </div>
     </div>

@@ -1,5 +1,5 @@
 const {Sequelize,DataTypes, TIME} = require('sequelize');
-const sequelize = new Sequelize("cms","root","pass@123",{
+const sequelize = new Sequelize("cms_v2","root","pass@123",{
     host: 'localhost',
     dialect : "mysql"
 })
@@ -85,14 +85,6 @@ const Driver = sequelize.define("driver",{
         type : DataTypes.STRING(100),
         allowNull : false
     },
-    cab_no : {
-        type : DataTypes.INTEGER,
-        references : {
-            model : "cabs",
-            key : "cab_no"
-        },
-        allowNull : true
-    }
 })
 const Bookride = sequelize.define("bookride",{
     ride_otp :{
@@ -132,14 +124,6 @@ const Bookride = sequelize.define("bookride",{
         },
         allowNull : true
     },
-    user_id : {
-        type : DataTypes.INTEGER,
-        references : {
-            model : "customers",
-            key : 'user_id'
-        },
-        allowNull : true
-    }
 })
 module.exports = {
     Customer,
