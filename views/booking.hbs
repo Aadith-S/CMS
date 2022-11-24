@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/booking.css">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+{{>navbar}}
+<div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
+    <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
+	<div id = "cabtable">
+    <table class="table table-dark table-striped">
+        <thead  class="thead-dark">
+        <tr>
+            <th>Cab No</th>
+            <th>Cab Name</th>
+            <th>Cab Description</th>
+            <th>Total Seating</th>
+            <th>Fare</th>
+            <th>Booking</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each data}}
+            <tr>
+                <td>{{cab_no}}</td>
+                <td>{{cab_name}}</td>
+                <td>{{cab_description}}</td>
+                <td>{{cab_totalSeating}}</td>
+                <td>100</td>
+                <td><a href="?cab_no={{cab_no}}">Book Now</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    </div>
+</div>
+    <ul class="pagination ms-5" id="pageele" style="padding-bottom : 50px">
+        <li class="page-item"><a class="page-link" href="?page={{prevPage}}"><<</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{currentPage}}">{{currentPage}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{nextPage}}">>></a></li>
+    </ul>
+{{>footer}}
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
