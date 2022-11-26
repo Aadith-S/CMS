@@ -18,29 +18,30 @@
 <div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
 	<div id = "cabtable">
-    {{#if admin}}
-    <button class="btn btn-primary mb-2">+ Add Driver</button>
-    {{/if}}
     <table class="table table-dark table-striped">
         <thead  class="thead-dark">
         <tr>
-            <th>Cab No</th>
-            <th>Cab Name</th>
-            <th>Cab Description</th>
-            <th>Total Seating</th>
-            <th>Fare</th>
-            <th>Booking</th>
+            <th>User id</th>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Mobile</th>
         </tr>
         </thead>
         <tbody>
         {{#each info.data}}
             <tr>
-                <td><a href="/driverdetails">{{this.cab_no}}</a></td>
-                <td>{{this.cab_name}}</td>
-                <td>{{this.cab_description}}</td>
-                <td>{{this.cab_totalSeating}}</td>
-                <td>100</td>
-                <td><a href="/profile/bookCab?cab_no={{this.cab_no}}">Book Now</a></td>
+                <td>{{this.user_id}}</td>
+                <td>{{this.user_name}}</td>
+                <td>{{this.f_name}}</td>
+                <td>{{this.l_name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.gender}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.mobile}}</td>
             </tr>
         {{/each}}
         </tbody>

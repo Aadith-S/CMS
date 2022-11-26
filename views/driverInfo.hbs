@@ -18,18 +18,19 @@
 <div class=".container mb-5 mx-5" style="margin-top: 100px;">
     <div>
         <div>Profile</div>
-        <div>{{info.f_name}}</div>
-        <div>{{info.l_name}}</div>
-        <div>{{info.user_name}}</div>
-        <div>{{info.email}}</div>
-        <div>{{info.address}}</div>
-        <div>{{info.mobile}}</div>
+        <div>Driver Id : {{info.driver_id}}</div>
+        <div>Driver Name :  {{info.driver_name}}</div>
+        {{#if admin}}
+        <div>Driver Address : {{info.driver_address}}</div>
+        {{/if}}
+        <div>Driver Mobile :{{info.mobile}}</div>
+        <div>Driver Gender :{{info.gender}}</div>
+        <div>Driver Dob{{info.dob}}</div>
     </div>
     <div>
-    <a href="/profile/update">Update</a>
-    <a href="/profile/delete">Delete</a>
-    {{#if info.admin}}
-    <a href="/admin/viewAllUsers">View All Users</a>
+    {{#if admin}}
+    <a href="/admin/driverUpdate?driver_id={{info.driver_id}}">Update</a>
+    <a href="/admin/driverDelete?driver_id={{info.driver_id}}">Delete</a>
     {{/if}}
     </div>
 </div>

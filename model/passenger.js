@@ -18,7 +18,7 @@ const Customer = sequelize.define("customer",{
         allowNull : false
     },
     gender : {
-        type : DataTypes.INTEGER,
+        type : DataTypes.STRING(1),
         allowNull : false,
         
     },
@@ -46,6 +46,10 @@ const Customer = sequelize.define("customer",{
         type : DataTypes.STRING(50),
         allowNull : false
     },
+    admin : {
+        type : DataTypes.INTEGER,
+        allowNull : false
+    }
 })
 const Cab = sequelize.define("cab",{
     cab_no : {
@@ -84,6 +88,18 @@ const Driver = sequelize.define("driver",{
     driver_address : {
         type : DataTypes.STRING(100),
         allowNull : false
+    },
+    mobile : {
+        type : DataTypes.STRING(10),
+        allowNull : false
+    },
+    gender : {
+        type : DataTypes.STRING(1),
+        allowNull : false,
+    },
+    dob : {
+        type : DataTypes.DATE,
+        allowNull : false
     }
 })
 const Bookride = sequelize.define("bookride",{
@@ -115,6 +131,14 @@ const Bookride = sequelize.define("bookride",{
     cost : {
         type : DataTypes.INTEGER,
         allowNull : false
+    },
+    cab_no : {
+        type : DataTypes.INTEGER,
+        allowNull : true
+    },
+    user_id : {
+        type : DataTypes.INTEGER,
+        allowNull : true
     }
 })
 module.exports = {

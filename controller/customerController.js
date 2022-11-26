@@ -8,7 +8,7 @@ function authentication(uname,pass)
         },
     attributes : ["user_id"]}).then((result)=>{
             console.log(result);
-            if(result.length == 0)
+            if(result == null)
             {
                 reject(); 
             }
@@ -25,13 +25,14 @@ function addCustomer(user){
     db.Customer.create({
         f_name : user.firstName,
         l_name : user.lastName,
-        gender : parseInt(user.Gender),
+        gender : user.Gender,
         address : user.addr,
         dob : user.dob,
         mobile : user.pNo,
         email : user.email,
         user_name : user.userName,
         password : user.pass,
+        role : 0
     }).then((result)=>{
         console.log(result);
     }).catch((err)=>{
@@ -73,8 +74,9 @@ function driverdetails(cab_no = 1){
 
 module.exports = {
     index : (req,res,next) => {
-    let content = renderTemplate("index",{isAuthenticated : req.identity.isAuthenticated});
-    res.send(content);},
+        let content = renderTemplate("index",{isAuthenticated : req.identity.isAuthenticated});
+        res.send(content);
+    },
     login : (req,res)=>{
         console.log(req.body);
         if(req.method == "GET"){
@@ -113,26 +115,30 @@ module.exports = {
                 }
                 let data = {
                     info : info,
-                    isAuthenticated : req.identity.isAuthenticated
+                    isAuthenticated : req.identity.isAuthenticated,
+                    admin : req.identity.user.admin
                 }
-                let content = renderTemplate("searchCab",data);
+                console.log(data);
+                let content = renderTemplate("SearchCab",data);
                 res.send(content);
                 })
         }
     },
     driverDetails : (req,res)=>{
         if(req.method == "GET"){
-            res.send("hlooo");
-        }
-        else{
             driverdetails(req.query.cab_no).then((result)=>{
-                console.log(result.dataValues);
-                res.json(result.dataValues);
+                let info = {
+                    info : result.dataValues,
+                    isAuthenticated : req.identity.isAuthenticated,
+                    admin : req.identity.user.admin
+                }
+                let content = renderTemplate('driverinfo',info);
+                res.send(content);
             });
         }
     },
     logout : (req,res)=>{
         req.session.user_id = null;
         res.redirect("/login");
-    }
+    }  
 }

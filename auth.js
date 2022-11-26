@@ -10,7 +10,6 @@ module.exports = async (req, res,next)=>{
     }
 
     let user_id = req.session.user_id;
-    console.log(user_id);
     if(!user_id || user_id == null){
        return res.redirect("/login") 
     }
@@ -18,6 +17,7 @@ module.exports = async (req, res,next)=>{
     if(!userDetails || userDetails == null){
         return res.redirect("/login")
     }
+    else{    
     req.identity.isAuthenticated = true;
     req.identity.user = {
         f_name : userDetails.f_name,
@@ -26,7 +26,12 @@ module.exports = async (req, res,next)=>{
         email : userDetails.email,
         mobile : userDetails.mobile,
         dob : userDetails.dob,
-        gender : userDetails.gender
+        gender : userDetails.gender,
+        admin : userDetails.admin
     };
     return next();
+    }
+    // if(req.url == "/index"){
+    //     return next();
+    // }
 }

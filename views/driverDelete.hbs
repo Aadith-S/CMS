@@ -14,26 +14,13 @@
 </head>
 
 <body>
-{{>navbar}}
-<div class=".container mb-5 mx-5" style="margin-top: 100px;">
-    <div>
-        <div>Profile</div>
-        <div>{{info.f_name}}</div>
-        <div>{{info.l_name}}</div>
-        <div>{{info.user_name}}</div>
-        <div>{{info.email}}</div>
-        <div>{{info.address}}</div>
-        <div>{{info.mobile}}</div>
-    </div>
-    <div>
-    <a href="/profile/update">Update</a>
-    <a href="/profile/delete">Delete</a>
-    {{#if info.admin}}
-    <a href="/admin/viewAllUsers">View All Users</a>
-    {{/if}}
-    </div>
+  {{>navbar}}
+    <div class=".container mx-5 mb-5 row" style="margin-top: 100px;">
+    <form action="/admin/driverDelete?driver_id={{driver_id}}" method="post" class="offset-3 col-6">
+        <input type="submit" value="Delete Driver" class="btn btn-primary col-3 offset-5 mt-2">
+    </form>
 </div>
-{{>footer}}
+  {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

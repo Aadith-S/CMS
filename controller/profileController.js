@@ -19,10 +19,11 @@ function deleteUser(user_id){
 function cost(date,rideDate){
     return 100;
 }
-function booking(details){
+function booking(details,user_id,cab_no){
     return new Promise((res,req)=>{
         let date = new Date();
-        console.log(date);
+        console.log(user_id);
+        console.log(cab_no);
         let data = {
             date_of_booking : date,
             date_of_ride : details.date_of_ride,
@@ -30,8 +31,9 @@ function booking(details){
             dropoff : details.dropoff,
             ride_time : details.ride_time,
             cost : cost(date.getUTCDate,details.date_of_ride),
-            cab_no : details.cab_no,
-            user_id : details.user_id
+            cab_no : parseInt(cab_no),
+            user_id : user_id,
+            role : details.role
             }
             db.Bookride.create(data).then(result => {res(result)}).catch(err => {console.log(err)});
     })
@@ -70,11 +72,11 @@ module.exports = {
     },
     bookpage : (req, res) => {
         if(req.method == "GET"){
-            let content = renderTemplate("bookCab",{isAuthenticated : req.identity.isAuthenticated});
+            let content = renderTemplate("bookCab",{isAuthenticated : req.identity.isAuthenticated,cab_no : req.query.cab_no});
                 res.send(content);
         }
         else{
-            booking(req.body).then((result) => {res.send(result)})
+            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.send(result)})
         }
     }
 }
