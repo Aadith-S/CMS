@@ -18,30 +18,28 @@
 <div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
 	<div id = "cabtable">
-    {{#if admin}}
-    <button class="btn btn-primary mb-2"><a href="/admin/driverAdd" style="text-decoration: none; color:white">+ Add Driver</a></button>
-    <button class="btn btn-primary mb-2"><a href="/admin/cabAdd" style="text-decoration: none; color:white">+ Add Cab</a></button>
-    {{/if}}
     <table class="table table-dark table-striped">
         <thead  class="thead-dark">
         <tr>
-            <th>Cab No</th>
-            <th>Cab Name</th>
-            <th>Cab Description</th>
-            <th>Total Seating</th>
-            <th>Fare</th>
-            <th>Booking</th>
+            <th>Driver id</th>
+            <th>Driver Name</th>
+            <th>Driver Address</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th><a href="/admin/selectCab" style="text-decoration: none;color : white">Assign/Reassign</a></th>
         </tr>
         </thead>
         <tbody>
         {{#each info.data}}
             <tr>
-                <td><a href="/driverdetails?cab_no={{this.cab_no}}">{{this.cab_no}}</a></td>
-                <td>{{this.cab_name}}</td>
-                <td>{{this.cab_description}}</td>
-                <td>{{this.cab_totalSeating}}</td>
-                <td>100</td>
-                <td><a href="/profile/bookCab?cab_no={{this.cab_no}}">Book Now</a></td>
+                <td>{{this.driver_id}}</td>
+                <td>{{this.driver_name}}</td>
+                <td>{{this.driver_address}}</td>
+                <td>{{this.gender}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.mobile}}</td>
+                <td><a href="/admin/selectCab?driver_id={{this.driver_id}}&page=1" style="color : white">Select</a></td>
             </tr>
         {{/each}}
         </tbody>

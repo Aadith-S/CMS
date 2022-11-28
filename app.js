@@ -12,7 +12,7 @@ app.use(cookieSession({
     keys : ["aadith"],
     httpOnly : true,
     maxAge : 60 * 60 * 24 * 1000,
-}))
+}));
 app.use(authSession);
 app.use("/",route);
 app.listen(80);

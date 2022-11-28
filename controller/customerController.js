@@ -64,10 +64,16 @@ function getCab(page){
         })
     })
 }
-function driverdetails(cab_no = 1){
+function driverdetails(cab_no){
     return new Promise((res,rej)=>{
-        db.Driver.findByPk(cab_no).then((result)=>{
-            res(result);
+        db.Driver.findOne({where : {cab_no : cab_no}}).then((result)=>{
+            console.log(result);
+            if(result == null){
+            res(0);
+            }
+            else{
+                res(result);
+            }
         }).catch((err)=>{console.log(err)})
     })
 }
@@ -140,5 +146,6 @@ module.exports = {
     logout : (req,res)=>{
         req.session.user_id = null;
         res.redirect("/login");
-    }  
+    },
+    getCab : getCab
 }

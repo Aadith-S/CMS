@@ -18,10 +18,6 @@
 <div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
 	<div id = "cabtable">
-    {{#if admin}}
-    <button class="btn btn-primary mb-2"><a href="/admin/driverAdd" style="text-decoration: none; color:white">+ Add Driver</a></button>
-    <button class="btn btn-primary mb-2"><a href="/admin/cabAdd" style="text-decoration: none; color:white">+ Add Cab</a></button>
-    {{/if}}
     <table class="table table-dark table-striped">
         <thead  class="thead-dark">
         <tr>
@@ -36,12 +32,12 @@
         <tbody>
         {{#each info.data}}
             <tr>
-                <td><a href="/driverdetails?cab_no={{this.cab_no}}">{{this.cab_no}}</a></td>
+                <td><a href="/driverdetails">{{this.cab_no}}</a></td>
                 <td>{{this.cab_name}}</td>
                 <td>{{this.cab_description}}</td>
                 <td>{{this.cab_totalSeating}}</td>
                 <td>100</td>
-                <td><a href="/profile/bookCab?cab_no={{this.cab_no}}">Book Now</a></td>
+                <td><a href="/admin/cabset?cab_no={{this.cab_no}}">Assign</a></td>
             </tr>
         {{/each}}
         </tbody>

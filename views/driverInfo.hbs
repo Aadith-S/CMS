@@ -16,6 +16,7 @@
 <body>
 {{>navbar}}
 <div class=".container mb-5 mx-5" style="margin-top: 100px;">
+  {{#if info}}
     <div>
         <div>Profile</div>
         <div>Driver Id : {{info.driver_id}}</div>
@@ -33,6 +34,9 @@
     <a href="/admin/driverDelete?driver_id={{info.driver_id}}">Delete</a>
     {{/if}}
     </div>
+    {{else}}
+    <div class="alert alert-danger">NO DRIVER FOUND</div>
+    {{/if}}
 </div>
 {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->

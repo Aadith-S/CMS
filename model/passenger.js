@@ -100,6 +100,10 @@ const Driver = sequelize.define("driver",{
     dob : {
         type : DataTypes.DATE,
         allowNull : false
+    },
+    cab_no :{
+        type : DataTypes.INTEGER,
+        allowNull : true
     }
 })
 const Bookride = sequelize.define("bookride",{
