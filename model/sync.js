@@ -7,13 +7,13 @@ db.Cab.hasMany(db.Bookride,{
     foreignKey : "cab_no"
 });
 db.Bookride.belongsTo(db.Cab,{foreignKey : "cab_no"})
-db.Cab.hasOne(db.Driver,{
-    foreignKey : "cab_no"
+db.Driver.hasOne(db.Cab,{
+    foreignKey : "driver_id"
 });
-db.Driver.belongsTo(db.Cab,{
-    foreignKey : "cab_no"
+db.Cab.belongsTo(db.Driver,{
+    foreignKey : "driver_id"
 });
-db.Customer.sync({alter: true});
+db.Customer.sync();
+db.Driver.sync();
 db.Cab.sync();
 db.Bookride.sync();
-db.Driver.sync({alter: true});

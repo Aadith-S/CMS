@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 function authentication(uname,pass)
@@ -43,7 +44,7 @@ function addCustomer(user){
 function getCab(page){
     return new Promise((res,rej)=>{
         db.Cab.findAll({
-        attributes : ["cab_no","cab_name","cab_description","cab_totalSeating"]}).then((result)=>{
+        attributes : ["cab_no","cab_name","cab_description","cab_totalSeating","driver_id"],where : {driver_id : {[Op.not]:null}}}).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -64,9 +65,9 @@ function getCab(page){
         })
     })
 }
-function driverdetails(cab_no){
+function driverdetails(driver_id){
     return new Promise((res,rej)=>{
-        db.Driver.findOne({where : {cab_no : cab_no}}).then((result)=>{
+        db.Driver.findByPk(driver_id).then((result)=>{
             console.log(result);
             if(result == null){
             res(0);
@@ -132,7 +133,7 @@ module.exports = {
     },
     driverDetails : (req,res)=>{
         if(req.method == "GET"){
-            driverdetails(req.query.cab_no).then((result)=>{
+            driverdetails(req.query.driver_id).then((result)=>{
                 let info = {
                     info : result.dataValues,
                     isAuthenticated : req.identity.isAuthenticated,

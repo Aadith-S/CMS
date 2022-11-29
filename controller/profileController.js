@@ -76,7 +76,17 @@ module.exports = {
                 res.send(content);
         }
         else{
-            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.send(result)})
+            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.redirect("/profile/invoice?ride_otp="+result.ride_otp)})
+        }
+    },
+    invoice : (req, res) => {
+        if(req.method == "GET"){
+            db.Bookride.findByPk(req.query.ride_otp).then((result) => { console.log(result); let content = renderTemplate("invoice",{isAuthenticated : req.identity.isAuthenticated,data : result.dataValues });
+            res.send(content);})
+            
+        }
+        else{
+            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.redirect("/profile/invoice")})
         }
     }
 }

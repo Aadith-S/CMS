@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  {{>navbar}}
+<div bgcolor="#f6f6f6" style="color: #333; height: 100%; width: 100%;" height="100%" width="100%">
+    <table bgcolor="#f6f6f6" cellspacing="0" style="border-collapse: collapse; padding: 40px; width: 100%; margin-top:100px;margin-bottom:100px" width="100%">
+            <tr>
+                <td width="5px" style="padding: 0;"></td>
+                <td bgcolor="#FFFFFF" style="border: 1px solid #000; clear: both; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
+                </td>
+            </tr>
+            <tr>
+                <td width="5px" style="padding: 0;"></td>
+                <td style="border: 1px solid #000; border-top: 0; clear: both; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
+                    <table cellspacing="0" style="border-collapse: collapse; border-left: 1px solid #000; margin: 0 auto; max-width: 600px;">
+                        <tbody>
+                            <tr>
+                                <td valign="top"  style="padding: 20px;">
+                                    <h3
+                                        style="
+                                            border-bottom: 1px solid #000;
+                                            color: #000;
+                                            font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+                                            font-size: 18px;
+                                            font-weight: bold;
+                                            line-height: 1.2;
+                                            margin: 0;
+                                            margin-bottom: 15px;
+                                            padding-bottom: 5px;
+                                        "
+                                    >
+                                        Invoice
+                                    </h3>
+                                    <table cellspacing="0" style="border-collapse: collapse; margin-bottom: 40px;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 5px 0;">Pickup</td>
+                                                <td align="right" style="padding: 5px 0;">{{data.pickup}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0;">dropOff</td>
+                                                <td align="right" style="padding: 5px 0;">{{data.dropoff}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0;">Ride Date</td>
+                                                <td align="right" style="padding: 5px 0;">{{data.date_of_ride}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 0;">Ride Time</td>
+                                                <td align="right" style="padding: 5px 0;">{{data.ride_time}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-bottom: 2px solid #000; border-top: 2px solid #000; font-weight: bold; padding: 5px 0;">Cost</td>
+                                                <td align="right" style="border-bottom: 2px solid #000; border-top: 2px solid #000; font-weight: bold; padding: 5px 0;">Rs . {{data.cost}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="5px" style="padding: 0;"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{{>footer}}
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

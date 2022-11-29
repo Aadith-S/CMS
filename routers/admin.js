@@ -10,8 +10,10 @@ router.get("/viewAllDrivers",admin.viewAllDrivers)
 router.post("/driverAdd",admin.add);
 router.post("/driverDelete",admin.delete);
 router.post("/driverUpdate",admin.update);
-router.get("/selectCab",admin.assignDriver);
+router.get("/selectCab",admin.selectCab);
+router.get("/selectDriver",admin.assignDriver);
 router.get("/cabset",admin.cabAssign);
 router.get("/cabAdd",admin.cabAdd);
 router.post("/cabAdd",admin.cabAdd);
+router.get("/cabDel",admin.deletecab);
 module.exports = router;

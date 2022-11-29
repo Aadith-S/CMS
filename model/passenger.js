@@ -72,6 +72,10 @@ const Cab = sequelize.define("cab",{
     etc : {
         type : DataTypes.STRING(150),
         allowNull : true
+    },
+    driver_id :{
+        type : DataTypes.INTEGER,
+        allowNull : true
     }
 })
 const Driver = sequelize.define("driver",{
@@ -101,10 +105,6 @@ const Driver = sequelize.define("driver",{
         type : DataTypes.DATE,
         allowNull : false
     },
-    cab_no :{
-        type : DataTypes.INTEGER,
-        allowNull : true
-    }
 })
 const Bookride = sequelize.define("bookride",{
     ride_otp :{
