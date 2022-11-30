@@ -33,7 +33,6 @@ function booking(details,user_id,cab_no){
             cost : cost(date.getUTCDate,details.date_of_ride),
             cab_no : parseInt(cab_no),
             user_id : user_id,
-            role : details.role
             }
             db.Bookride.create(data).then(result => {res(result)}).catch(err => {console.log(err)});
     })

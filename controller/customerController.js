@@ -78,7 +78,15 @@ function driverdetails(driver_id){
         }).catch((err)=>{console.log(err)})
     })
 }
-
+function innerJoin(){
+    db.Cab.findAll({
+        include : {
+            model : db.Driver,
+            required : true
+        }
+    }).then(result=>{console.log(result)})
+}
+innerJoin();
 module.exports = {
     index : (req,res,next) => {
         let content = renderTemplate("index",{isAuthenticated : req.identity.isAuthenticated});
