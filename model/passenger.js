@@ -146,19 +146,28 @@ const Bookride = sequelize.define("bookride",{
     }
 })
 Driver.hasOne(Cab,{
-    foreignKey : "driver_id"
+    foreignKey : "driver_id",
+    sourceKey : "driver_id"
 })
 Cab.belongsTo(Driver,{
-    foreignKey : "driver_id"
+    foreignKey : "driver_id",
+    targetKey : "driver_id"
 })
 Customer.hasMany(Bookride,{
-    foreignKey : "user_id"
+    foreignKey : "user_id",
+    sourceKey : "user_id"
 });
 Bookride.belongsTo(Customer,{
-    foreignKey : "user_id"
+    foreignKey : "user_id",
+    targetKey : "user_id"
 })
 Cab.hasMany(Bookride,{
-    foreignKey : "cab_no"
+    foreignKey : "cab_no",
+    sourceKey : "cab_no"
+})
+Bookride.belongsTo(Cab,{
+    foreignKey : "cab_no",
+    targetKey : "cab_no"
 });
 module.exports = {
     Customer,

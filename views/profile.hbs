@@ -28,10 +28,14 @@
     <div>
     <a href="/profile/update">Update</a>
     <a href="/profile/delete">Delete</a>
+    <a href="/profile/allBookings?page=1">View All your Bookings</a>
+    <br>
     {{#if info.admin}}
+    <br><p>ADMIN CONTROLS</p>
     <a href="/admin/viewAllUsers">View All Users</a>
     <a href="/admin/viewAllDrivers">View All Drivers</a>
     <a href="/admin/selectCab?page=1">View All Cabs</a>
+    <a href="/admin/allBookings?page=1">View All Bookings</a>
     {{/if}}
     </div>
 </div>

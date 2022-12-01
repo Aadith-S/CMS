@@ -1,6 +1,39 @@
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
-
+function viewAllBookings(page,user_id){
+    return new Promise((res,rej)=>{
+        db.Bookride.findAll({
+    include:
+    {
+        model : db.Cab,
+        required : true,
+        include : { model : db.Driver,
+                    required : true,
+                },
+    },
+    where : { user_id : user_id }
+    }).then((result)=>{
+            let data = [];
+            let pages = Math.ceil(result.length/5)
+            if(page<1){
+                page = 1;
+            }
+            else if(page>pages){
+                page = pages;
+            }
+            console.table(result);
+            for(let i = 5*(page-1);i<5*page && i<result.length;i++){
+                data.push(result[i].dataValues)
+                console.log(data[0].cab.dataValues.driver.dataValues);
+            }
+            let body ={
+                data : data,
+                pages : pages
+            }
+            res(body);
+        })
+    })
+}
 function userUpdate(user_id,details){
     return new Promise((res,rej)=>{
     db.Customer.update(details,{where :{user_id :user_id}}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
@@ -75,7 +108,7 @@ module.exports = {
                 res.send(content);
         }
         else{
-            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.redirect("/profile/invoice?ride_otp="+result.ride_otp)})
+            booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.redirect("/profile/payment?ride_otp="+result.ride_otp+"&cost="+result.cost)})
         }
     },
     invoice : (req, res) => {
@@ -86,6 +119,43 @@ module.exports = {
         }
         else{
             booking(req.body,req.session.user_id,req.query.cab_no).then((result) => {res.redirect("/profile/invoice")})
+        }
+    },
+    payment : (req, res) => {
+        if(req.method == "GET"){
+            let content = renderTemplate("payment",{isAuthenticated : req.identity.isAuthenticated,ride_otp: req.query.ride_otp,cost: cost});
+            res.send(content);
+            
+        }
+        else{
+            res.redirect("/profile/invoice?ride_otp="+req.query.ride_otp)
+        }
+    },
+    userBookings: (req,res)=>{
+        let page = {page : 1}
+        console.log(req.query + Object.keys(req.query).length);
+        if(req.method == "GET"){
+            if(Object.keys(req.query).length != 0){
+                page = req.query;
+            }
+            viewAllBookings(parseInt(page.page),req.session.user_id).then((body)=>{
+                let prevPage = page.page<=1?1:parseInt(page.page)-1;
+                let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
+                let info = {
+                    data : body,
+                }
+                let data = {
+                    info : info.data,
+                    isAuthenticated : req.identity.isAuthenticated,
+                    prevPage : prevPage,
+                    currentPage : parseInt(page.page),
+                    nextPage : nextPage,
+                }
+                console.log("hi");
+                console.log(data.info.data);
+                let content = renderTemplate("userBooking",data);
+                res.send(content);
+                })
         }
     }
 }

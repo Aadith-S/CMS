@@ -1,6 +1,39 @@
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 const cc = require("./customerController")
+function viewAllBookings(page,user_id){
+    return new Promise((res,rej)=>{
+        db.Bookride.findAll({
+    include:
+    {
+        model : db.Cab,
+        required : true,
+        include : { model : db.Driver,
+                    required : true,
+                },
+    }
+    }).then((result)=>{
+            let data = [];
+            let pages = Math.ceil(result.length/5)
+            if(page<1){
+                page = 1;
+            }
+            else if(page>pages){
+                page = pages;
+            }
+            console.table(result);
+            for(let i = 5*(page-1);i<5*page && i<result.length;i++){
+                data.push(result[i].dataValues)
+                console.log(data[0].cab.dataValues.driver.dataValues);
+            }
+            let body ={
+                data : data,
+                pages : pages
+            }
+            res(body);
+        })
+    })
+}
 function viewAllUsers(page){
     return new Promise((res,rej)=>{
         db.Customer.findAll({
@@ -283,5 +316,32 @@ module.exports = {
     },
     deletecab: (req,res)=>{
             delCab(req.query.cab_no).then(() =>res.redirect("/admin/selectCab?page=1")).catch(() =>res.redirect("/selectCab?page=1"));
+    },
+    allBookings: (req,res)=>{
+        let page = {page : 1}
+        console.log(req.query + Object.keys(req.query).length);
+        if(req.method == "GET"){
+            if(Object.keys(req.query).length != 0){
+                page = req.query;
+            }
+            viewAllBookings(parseInt(page.page),req.session.user_id).then((body)=>{
+                let prevPage = page.page<=1?1:parseInt(page.page)-1;
+                let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
+                let info = {
+                    data : body,
+                }
+                let data = {
+                    info : info.data,
+                    isAuthenticated : req.identity.isAuthenticated,
+                    prevPage : prevPage,
+                    currentPage : parseInt(page.page),
+                    nextPage : nextPage,
+                }
+                console.log("hi");
+                console.log(data.info.data);
+                let content = renderTemplate("userBooking",data);
+                res.send(content);
+                })
+        }
     }
 }

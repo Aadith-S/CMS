@@ -8,5 +8,8 @@ router.post("/update",pc.update);
 router.post("/delete",pc.delete);
 router.get("/bookCab",pc.bookpage);
 router.post("/bookCab",pc.bookpage);
-router.get("/invoice",pc.invoice)
+router.get("/invoice",pc.invoice);
+router.get('/payment',pc.payment);
+router.post('/payment',pc.payment);
+router.get('/allbookings',pc.userBookings);
 module.exports = router;
