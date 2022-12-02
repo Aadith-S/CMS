@@ -10,32 +10,45 @@
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="/static/css/profile.css">
 </head>
 
 <body>
 {{>navbar}}
-<div class=".container mb-5 mx-5" style="margin-top: 100px;">
-    <div>
-        <div>Profile</div>
-        <div>{{info.f_name}}</div>
-        <div>{{info.l_name}}</div>
-        <div>{{info.user_name}}</div>
-        <div>{{info.email}}</div>
-        <div>{{info.address}}</div>
-        <div>{{info.mobile}}</div>
-    </div>
-    <div>
-    <a href="/profile/update">Update</a>
-    <a href="/profile/delete">Delete</a>
-    <a href="/profile/allBookings?page=1">View All your Bookings</a>
+<img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
+<div class=".container mb-5 mx-5 row cabbody" style="margin-top: 100px;">
+    <div class="col-4  profileside">
+        <div class="display-4">Profile</div>
+        <table class="table table-default">
+          <tr>
+            <td>Name :</td>
+            <td>{{info.f_name}}{{info.l_name}}</td>
+          </tr>
+          <tr>
+            <td>User Name :</td>
+            <td>{{info.user_name}}</td>
+          </tr>
+          <tr>
+            <td>Email :</td>
+            <td>{{info.email}}</td>
+          </tr>
+          <tr>
+            <td>Mobile :</td>
+            <td>{{info.mobile}}</td>
+          </tr>
+        </table>
+    <a href="/profile/update" class="btn btn-primary">Update</a>
+    <a href="/profile/delete" class="btn btn-primary">Delete</a>
+    <a href="/profile/allBookings?page=1"class="btn btn-primary">View All your Bookings</a>
+  </div>
+    <div class="adminside col-4">
     <br>
     {{#if info.admin}}
-    <br><p>ADMIN CONTROLS</p>
-    <a href="/admin/viewAllUsers">View All Users</a>
-    <a href="/admin/viewAllDrivers">View All Drivers</a>
-    <a href="/admin/selectCab?page=1">View All Cabs</a>
-    <a href="/admin/allBookings?page=1">View All Bookings</a>
+    <br><p class="display-6">ADMIN CONTROLS</p>
+    <a href="/admin/viewAllUsers"class="btn btn-primary">View All Users</a>
+    <a href="/admin/viewAllDrivers"class="btn btn-primary">View All Drivers</a>
+    <a href="/admin/selectCab?page=1"class="btn btn-primary">View All Cabs</a>
+    <a href="/admin/allBookings?page=1"class="btn btn-primary">View All Bookings</a>
     {{/if}}
     </div>
 </div>

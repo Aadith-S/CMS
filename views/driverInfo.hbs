@@ -10,29 +10,46 @@
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
+<link rel="stylesheet" href="/static/css/driverinfo.css">
 </head>
 
 <body>
 {{>navbar}}
-<div class=".container mb-5 mx-5" style="margin-top: 100px;">
+<img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
+<div class=".container mb-5 mx-5 row cabbody" style="margin-top: 100px;">
   {{#if info}}
-    <div>
-        <div>Profile</div>
-        <div>Driver Id : {{info.driver_id}}</div>
-        <div>Driver Name :  {{info.driver_name}}</div>
-        {{#if admin}}
-        <div>Driver Address : {{info.driver_address}}</div>
-        {{/if}}
-        <div>Driver Mobile :{{info.mobile}}</div>
-        <div>Driver Gender :{{info.gender}}</div>
-        <div>Driver Dob{{info.dob}}</div>
+    <div class="col-5 profileside">
+        <div class="display-6">Profile</div>
+        <table class="table table-default">
+          <tr>
+            <td>Driver Id:</td>
+            <td>{{info.driver_id}}</td>
+          </tr>
+          <tr>
+            <td>Driver Name:</td>
+            <td>{{info.driver_name}}</td>
+          </tr>
+          {{#if admin}}
+          <tr>
+            <td>Driver Address</td>
+            <td>{{info.driver_address}}</td>
+          </tr>
+          {{/if}}
+          <tr>
+            <td>Mobile:</td>
+            <td>{{info.mobile}}</td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td>{{info.gender}}</td>
+          </tr>
+        </table>
+    {{#if admin}}
+    <a href="/admin/driverUpdate?driver_id={{info.driver_id}}" class="btn btn-primary">Update</a>
+    <a href="/admin/driverDelete?driver_id={{info.driver_id}}" class="btn btn-primary">Delete</a>
+    {{/if}}
     </div>
     <div>
-    {{#if admin}}
-    <a href="/admin/driverUpdate?driver_id={{info.driver_id}}">Update</a>
-    <a href="/admin/driverDelete?driver_id={{info.driver_id}}">Delete</a>
-    {{/if}}
     </div>
     {{else}}
     <div class="alert alert-danger">NO DRIVER FOUND</div>
