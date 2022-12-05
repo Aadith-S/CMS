@@ -33,7 +33,7 @@ function addCustomer(user){
         email : user.email,
         user_name : user.userName,
         password : user.pass,
-        role : 0
+        admin : 0
     }).then((result)=>{
         console.log(result);
     }).catch((err)=>{
@@ -109,7 +109,10 @@ module.exports = {
             res.send(content);
             }
         else{
-            addCustomer(req.body).then(() =>res.redirect("/")).catch(() =>res.redirect("/signup"));
+            req.body.admin = 0;
+            console.log(req.body);
+            addCustomer(req.body).then().catch((err) =>{console.log(err); res.redirect("/signup")});
+            res.redirect("/");
             }
     },
     bookride : (req, res)=>{
