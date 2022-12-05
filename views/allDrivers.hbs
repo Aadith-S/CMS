@@ -27,7 +27,7 @@
             <th>Driver Address</th>
             <th>Gender</th>
             <th>DOB</th>
-            <th>Mobile</th>
+            <th colspan="2">Mobile</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +39,7 @@
                 <td>{{this.gender}}</td>
                 <td>{{this.dob}}</td>
                 <td>{{this.mobile}}</td>
+                <td><a href="/driverdetails?driver_id={{this.driver_id}}" style="text-decoration: underline;color:white">View</a></td>
             </tr>
         {{/each}}
         </tbody>

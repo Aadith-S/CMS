@@ -44,7 +44,12 @@ function addCustomer(user){
 function getCab(page){
     return new Promise((res,rej)=>{
         db.Cab.findAll({
-        attributes : ["cab_no","cab_name","cab_description","cab_totalSeating","driver_id"],where : {driver_id : {[Op.not]:null}}}).then((result)=>{
+        attributes : ["cab_no","cab_name","cab_description","cab_totalSeating","driver_id"],where : {driver_id : {[Op.not]:null}},
+        include : {
+            model : db.Driver,
+            required : true
+        }
+        }).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -53,7 +58,6 @@ function getCab(page){
             else if(page>pages){
                 page = pages;
             }
-            console.table(result);
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
             }
@@ -61,6 +65,7 @@ function getCab(page){
                 data : data,
                 pages : pages
             }
+            console.log(body.data[0].driver.dataValues.driver_name);
             res(body);
         })
     })
@@ -78,15 +83,6 @@ function driverdetails(driver_id){
         }).catch((err)=>{console.log(err)})
     })
 }
-function innerJoin(){
-    db.Cab.findAll({
-        include : {
-            model : db.Driver,
-            required : true
-        }
-    }).then(result=>{console.log(result)})
-}
-innerJoin();
 module.exports = {
     index : (req,res,next) => {
         let content = renderTemplate("index",{isAuthenticated : req.identity.isAuthenticated});
@@ -115,7 +111,7 @@ module.exports = {
             res.redirect("/");
             }
     },
-    bookride : (req, res)=>{
+    bookride : (req, res)=>{    ``
         let page = {page : 1}
         console.log(req.query + Object.keys(req.query).length);
         if(req.method == "GET"){
@@ -136,7 +132,7 @@ module.exports = {
                     isAuthenticated : req.identity.isAuthenticated,
                     admin : req.identity.user.admin
                 }
-                console.log(data);
+                console.log(data.info.data[0].driver.dataValues.driver_name);
                 let content = renderTemplate("SearchCab",data);
                 res.send(content);
                 })

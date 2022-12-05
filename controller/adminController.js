@@ -92,7 +92,10 @@ function assignDriver(cab_no,driver_id){
 }
 function getCab(page){
     return new Promise((res,rej)=>{
-        db.Cab.findAll().then((result)=>{
+        db.Cab.findAll({include : {
+            model : db.Driver,
+            required : true
+        }}).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){

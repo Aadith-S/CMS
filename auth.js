@@ -11,6 +11,9 @@ module.exports = async (req, res,next)=>{
 
     let user_id = req.session.user_id;
     if(!user_id || user_id == null){
+        if(req.url == "/index"){
+            return next();
+        }
        return res.redirect("/login") 
     }
     let userDetails = await db.Customer.findByPk(user_id);

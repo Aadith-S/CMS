@@ -27,7 +27,7 @@
             <th>Cab Description</th>
             <th>Total Seating</th>
             <th>Fare</th>
-            <th>Driver_id</th>
+            <th>Driver Name</th>
             <th>Assign/Re-Assign</th>
             <th>Edit/Delete</th>
         </tr>
@@ -35,12 +35,12 @@
         <tbody>
         {{#each info.data}}
             <tr>
-                <td><a href="/driverdetails?driver_id={{this.driver_id}}">{{this.cab_no}}</a></td>
+                <td><a>{{this.cab_no}}</a></td>
                 <td>{{this.cab_name}}</td>
                 <td>{{this.cab_description}}</td>
                 <td>{{this.cab_totalSeating}}</td>
                 <td>100</td>
-                <td>{{this.driver_id}}</td>
+                <td><a href="/driverdetails?driver_id={{this.driver_id}}" style="text-decoration: underline; color : white">{{this.driver.dataValues.driver_name}}</a></td>
                 <td><a href="/admin/selectdriver?cab_no={{this.cab_no}}&page=1">Assign</a></td>
                 <td><a href="" style="color: blue;">Edit</a><a href="/admin/CabDel?cab_no={{this.cab_no}}" class = "ms-2" style="color: red;">Delete</a></td>
             </tr>
