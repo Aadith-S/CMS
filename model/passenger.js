@@ -104,7 +104,7 @@ const Driver = sequelize.define("driver",{
     dob : {
         type : DataTypes.DATE,
         allowNull : false
-    },
+    }
 })
 const Bookride = sequelize.define("bookride",{
     ride_otp :{

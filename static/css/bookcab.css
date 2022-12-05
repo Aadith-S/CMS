@@ -1,0 +1,25 @@
+.cabimg{
+    position: absolute;
+    z-index: 1;
+    opacity: 0.3;
+    height: 600px;
+    width: 100%;
+    top : 0%;
+}
+.cabbody{
+    position: relative;
+    z-index: 3;
+}   
+footer{
+    position: absolute;
+    z-index: 3;
+    bottom: 0%;
+    width: 100%;
+}
+.cabform{
+    background-color: rgb(143, 143, 143,0.7);
+}
+form label{
+    color: black;
+    font-size: 20px;
+}
