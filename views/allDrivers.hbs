@@ -19,6 +19,7 @@
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
 	<div id = "cabtable">
         <button class="btn btn-primary mb-2"><a href="/admin/driverAdd" style="text-decoration: none; color:white">+ Add Driver</a></button>
+    {{#if info.data}}
     <table class="table table-dark table-striped">
         <thead  class="thead-dark">
         <tr>
@@ -44,6 +45,9 @@
         {{/each}}
         </tbody>
     </table>
+    {{else}}
+        <div class="alert alert-danger">NO DATA FOUND</div>
+    {{/if}}
     </div>
 </div>
     <ul class="pagination ms-5" id="pageele" style="padding-bottom : 50px">

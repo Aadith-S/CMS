@@ -1,16 +1,21 @@
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
+let cost = 0
 function viewAllBookings(page,user_id){
     return new Promise((res,rej)=>{
         db.Bookride.findAll({
     include:
-    {
+    [{
         model : db.Cab,
         required : true,
         include : { model : db.Driver,
                     required : true,
-                },
-    },
+                }
+        },
+        {
+            model : db.Location,
+            required : true
+        }],
     where : { user_id : user_id }
     }).then((result)=>{
             let data = [];
@@ -21,14 +26,18 @@ function viewAllBookings(page,user_id){
             else if(page>pages){
                 page = pages;
             }
-            console.table(result);
+            console.log(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
-                console.log(data[0].cab.dataValues.driver.dataValues);
+            }
             }
             let body ={
                 data : data,
-                pages : pages
+                pages : pages,
             }
             res(body);
         })
@@ -49,25 +58,24 @@ function deleteUser(user_id){
     })
     })
 }
-function cost(date,rideDate){
-    return 100;
-}
 function booking(details,user_id,cab_no){
     return new Promise((res,req)=>{
-        let date = new Date();
-        console.log(user_id);
-        console.log(cab_no);
-        let data = {
-            date_of_booking : date,
-            date_of_ride : details.date_of_ride,
-            pickup : details.pickup,
-            dropoff : details.dropoff,
-            ride_time : details.ride_time,
-            cost : cost(date.getUTCDate,details.date_of_ride),
-            cab_no : parseInt(cab_no),
-            user_id : user_id,
-            }
-            db.Bookride.create(data).then(result => {res(result)}).catch(err => {console.log(err)});
+        db.Location.findOne({where : {pickup : details.pickup,dropoff : details.dropoff}}).then((loc)=>{
+            let date = new Date();
+            cost = loc.cost;
+            console.log(user_id);
+            console.log(cab_no);
+            let data = {
+                date_of_booking : date,
+                date_of_ride : details.date_of_ride,
+                location_id : loc.location_id,
+                ride_time : details.ride_time,
+                cost : loc.cost,
+                cab_no : parseInt(cab_no),
+                user_id : user_id,
+                }
+                db.Bookride.create(data).then(result => {res(result)}).catch(err => {console.log(err)});
+        })
     })
 }
 
@@ -113,7 +121,12 @@ module.exports = {
     },
     invoice : (req, res) => {
         if(req.method == "GET"){
-            db.Bookride.findByPk(req.query.ride_otp).then((result) => { console.log(result); let content = renderTemplate("invoice",{isAuthenticated : req.identity.isAuthenticated,data : result.dataValues });
+            db.Bookride.findByPk(req.query.ride_otp,{
+                include : {
+                    model : db.Location,
+                    required : true
+                }
+            }).then((result) => { console.log(result); let content = renderTemplate("invoice",{isAuthenticated : req.identity.isAuthenticated,data : result.dataValues });
             res.send(content);})
             
         }

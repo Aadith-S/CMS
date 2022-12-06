@@ -113,20 +113,16 @@ const Bookride = sequelize.define("bookride",{
         autoIncrement : true
     },
     date_of_booking : {
-        type : DataTypes.DATE,
+        type : DataTypes.DATEONLY,
         allowNull : false
     },
     date_of_ride : {
-        type : DataTypes.DATE,
+        type : DataTypes.DATEONLY,
         allowNull : true
     },
-    pickup : {
-        type : DataTypes.STRING(50),
-        allowNull : true
-    },
-    dropoff : {
-        type : DataTypes.STRING(50),
-        allowNull : true
+    location_id : {
+        type : DataTypes.INTEGER,
+        allowNull : false
     },
     ride_time : {
         type : DataTypes.TIME,
@@ -143,6 +139,25 @@ const Bookride = sequelize.define("bookride",{
     user_id : {
         type : DataTypes.INTEGER,
         allowNull : true
+    }
+})
+const Location = sequelize.define("location",{
+    location_id : {
+        type : DataTypes.INTEGER,
+        primaryKey : true,
+        autoIncrement : true
+    },
+    pickup : {
+        type : DataTypes.STRING(50),
+        allowNull : false
+    },
+    dropoff : {
+        type : DataTypes.STRING(50),
+        allowNull : false
+    },
+    cost : {
+        type : DataTypes.INTEGER,
+        allowNull : false
     }
 })
 Driver.hasOne(Cab,{
@@ -169,9 +184,18 @@ Bookride.belongsTo(Cab,{
     foreignKey : "cab_no",
     targetKey : "cab_no"
 });
+Location.hasMany(Bookride,{
+    foreignKey : "location_id",
+    sourceKey : "location_id"
+})
+Bookride.belongsTo(Location,{
+    foreignKey : "location_id",
+    targetKey : "location_id"
+})
 module.exports = {
     Customer,
     Cab,
     Driver,
-    Bookride
+    Bookride,
+    Location
 }

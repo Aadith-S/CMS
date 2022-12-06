@@ -18,6 +18,7 @@
 <div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
 	<div id = "cabtable">
+  {{#if info.data}}
     <table class="table table-dark table-striped">
         <thead  class="thead-dark">
         <tr>
@@ -37,8 +38,8 @@
                 <td>{{this.ride_otp}}</td>
                 <td>{{this.date_of_booking}}</td>
                 <td>{{this.date_of_ride}}</td>
-                <td>{{this.pickup}}</td>
-                <td>{{this.dropoff}}</td>
+                <td>{{this.location.dataValues.pickup}}</td>
+                <td>{{this.location.dataValues.dropoff}}</td>
                 <td>{{this.ride_time}}</td>
                 <td>{{this.cost}}</td>
                 <td>{{this.cab.dataValues.driver.dataValues.driver_name}}</td>
@@ -46,6 +47,9 @@
         {{/each}}
         </tbody>
     </table>
+    {{else}}
+    <div class="alert alert-danger">NO DATA FOUND</div>
+    {{/if}}
     </div>
 </div>
     <ul class="pagination ms-5" id="pageele" style="padding-bottom : 50px">

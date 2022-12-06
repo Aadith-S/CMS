@@ -16,5 +16,7 @@ router.get("/cabset",admin.cabAssign);
 router.get("/cabAdd",admin.cabAdd);
 router.post("/cabAdd",admin.cabAdd);
 router.get("/cabDel",admin.deletecab);
-router.get("/allBookings",admin.allBookings);
+router.get("/allBookings",admin.allBookingsDate);
+router.post("/allBookings",admin.allBookingsDate);
+router.get("/clear",admin.clear);
 module.exports = router;

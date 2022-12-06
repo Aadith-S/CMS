@@ -41,16 +41,16 @@
     <a href="/profile/delete" class="btn btn-primary">Delete</a>
     <a href="/profile/allBookings?page=1"class="btn btn-primary">View All your Bookings</a>
   </div>
+    {{#if info.admin}}
     <div class="adminside col-4">
     <br>
-    {{#if info.admin}}
     <br><p class="display-6">ADMIN CONTROLS</p>
     <a href="/admin/viewAllUsers"class="btn btn-primary">View All Users</a>
     <a href="/admin/viewAllDrivers"class="btn btn-primary">View All Drivers</a>
     <a href="/admin/selectCab?page=1"class="btn btn-primary">View All Cabs</a>
     <a href="/admin/allBookings?page=1"class="btn btn-primary">View All Bookings</a>
-    {{/if}}
     </div>
+    {{/if}}
 </div>
 {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->

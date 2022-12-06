@@ -1,18 +1,27 @@
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 const cc = require("./customerController")
-function viewAllBookings(page,user_id){
+function viewAllBookings(page){
     return new Promise((res,rej)=>{
         db.Bookride.findAll({
     include:
-    {
+    [{
         model : db.Cab,
         required : true,
         include : { model : db.Driver,
-                    required : true,
-                },
-    }
-    }).then((result)=>{
+                    required : true
+                }
+        },
+        {
+            model : db.Customer,
+            required : true
+        },
+        {
+            model : db.Location,
+            required : true
+        }
+    ]}
+    ).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -22,9 +31,91 @@ function viewAllBookings(page,user_id){
                 page = pages;
             }
             console.table(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
-                console.log(data[0].cab.dataValues.driver.dataValues);
+            }
+            }
+            let body ={
+                data : data,
+                pages : pages
+            }
+            res(body);
+        })
+    })
+}
+function viewAllBookingsPost(page,date){
+    console.log(date);
+    console.log("hi");
+    let obj = {};
+    if(date == null){
+        console.log("null block");
+        obj = {
+            include:
+            [{
+                model : db.Cab,
+                required : true,
+                include : { model : db.Driver,
+                            required : true
+                        }
+                },
+                {
+                    model : db.Customer,
+                    required : true
+                },
+                {
+                    model : db.Location,
+                    required : true
+                }
+            ]
+        }
+    }
+    else{
+    obj = {
+        include:
+        [{
+            model : db.Cab,
+            required : true,
+            include : { model : db.Driver,
+                        required : true
+                    }
+            },
+            {
+                model : db.Customer,
+                required : true
+            },
+            {
+                model : db.Location,
+                required : true
+            }
+        ],
+         where : {
+            date_of_booking : date
+        }
+        }
+    }
+    return new Promise((res,rej)=>{
+        db.Bookride.findAll(obj
+    ).then((result)=>{
+            let data = [];
+            let pages = Math.ceil(result.length/5)
+            if(page<1){
+                page = 1;
+            }
+            else if(page>pages){
+                page = pages;
+            }
+            console.table(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
+            for(let i = 5*(page-1);i<5*page && i<result.length;i++){
+                data.push(result[i].dataValues)
+            }
             }
             let body ={
                 data : data,
@@ -47,8 +138,13 @@ function viewAllUsers(page){
                 page = pages;
             }
             console.table(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
+            }
             }
             let body ={
                 data : data,
@@ -70,8 +166,13 @@ function viewAllDrivers(page){
                 page = pages;
             }
             console.table(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
+            }
             }
             let body ={
                 data : data,
@@ -94,7 +195,7 @@ function getCab(page){
     return new Promise((res,rej)=>{
         db.Cab.findAll({include : {
             model : db.Driver,
-            required : true
+            required : false
         }}).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
@@ -105,8 +206,13 @@ function getCab(page){
                 page = pages;
             }
             console.table(result);
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
+            }
             }
             let body ={
                 data : data,
@@ -207,6 +313,9 @@ module.exports = {
                 let content = renderTemplate("allDrivers",data);
                 res.send(content);
                 })
+        }
+        else{
+
         }
     },
     update : (req,res)=>{
@@ -327,7 +436,7 @@ module.exports = {
             if(Object.keys(req.query).length != 0){
                 page = req.query;
             }
-            viewAllBookings(parseInt(page.page),req.session.user_id).then((body)=>{
+            viewAllBookings(parseInt(page.page)).then((body)=>{
                 let prevPage = page.page<=1?1:parseInt(page.page)-1;
                 let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
                 let info = {
@@ -342,9 +451,52 @@ module.exports = {
                 }
                 console.log("hi");
                 console.log(data.info.data);
-                let content = renderTemplate("userBooking",data);
+                let content = renderTemplate("allBookings",data);
                 res.send(content);
                 })
         }
+    },
+    allBookingsDate : (req, res)=>{
+        let page = {page : 1}
+        var date = null;
+        console.log(req.query + Object.keys(req.query).length);
+        if(req.method == "GET"){
+            if(Object.keys(req.query).length != 0){
+                page = req.query;
+            }
+            if(req.session.date == undefined || !req.session.date){
+                date = null
+            }
+            else{
+                date = req.session.date;
+            }
+            console.log(null);
+            viewAllBookingsPost(parseInt(page.page),date).then((body)=>{
+                let prevPage = page.page<=1?1:parseInt(page.page)-1;
+                let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
+                let info = {
+                    data : body,
+                }
+                let data = {
+                    info : info.data,
+                    isAuthenticated : req.identity.isAuthenticated,
+                    prevPage : prevPage,
+                    currentPage : parseInt(page.page),
+                    nextPage : nextPage,
+                }
+                console.log("hi");
+                console.log(data.info.data);
+                let content = renderTemplate("allBookings",data);
+                res.send(content);
+                })
+        }
+        else{
+            req.session.date = req.body.date;
+            res.redirect("/admin/allBookings");
+        }
+    },
+    clear : (req, res) => {
+        req.session.date = null;
+        res.redirect("/admin/allBookings");
     }
 }

@@ -3,6 +3,7 @@ const cc = require("../controller/customerController");
 const router = express.Router();
 const routera = require("./admin")
 const routerp = require("./profile")
+router.get("/",(req,res)=>res.redirect("/index"));
 router.get("/index",cc.index)
 router.get("/login",cc.login);
 router.post("/login",cc.login);

@@ -22,11 +22,19 @@
     <form action="/profile/bookCab?cab_no={{cab_no}}" method="post">
         <div class="form-control formdata" style="background-color: rgb(143, 143, 143,0); border : 0px">
             <label for="">Pick-Up</label>
-            <input type="text" name="pickup" id="">
+            <select name="pickup" id="pickup">
+              <option value="Alpy">Alappuzha</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Bnglr">Banglore</option>
+            </select>
         </div>
         <div class="form-control formdata" style="background-color: rgb(143, 143, 143,0);border : 0px">
             <label for="">Drop-Off</label>
-            <input type="text" name="dropoff" id="">
+            <select name="dropoff" id="dropoff">
+              <option value="Alpy">Alappuzha</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Bnglr">Banglore</option>
+            </select>
         </div>
         <div class="form-control formdata" style="background-color: rgb(143, 143, 143,0);border : 0px">
             <label for="">Date of Ride</label>

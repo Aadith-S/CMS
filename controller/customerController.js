@@ -58,14 +58,18 @@ function getCab(page){
             else if(page>pages){
                 page = pages;
             }
+            if(result.length == 0){
+                data = 0;
+            }
+            else{
             for(let i = 5*(page-1);i<5*page && i<result.length;i++){
                 data.push(result[i].dataValues)
             }
+            }   
             let body ={
                 data : data,
                 pages : pages
             }
-            console.log(body.data[0].driver.dataValues.driver_name);
             res(body);
         })
     })
@@ -132,7 +136,6 @@ module.exports = {
                     isAuthenticated : req.identity.isAuthenticated,
                     admin : req.identity.user.admin
                 }
-                console.log(data.info.data[0].driver.dataValues.driver_name);
                 let content = renderTemplate("SearchCab",data);
                 res.send(content);
                 })
