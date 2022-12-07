@@ -30,6 +30,7 @@
             <th>Ride Time</th>
             <th>Cost</th>
             <th>Driver Name</th>
+            <th>View Invoice</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
                 <td>{{this.ride_time}}</td>
                 <td>{{this.cost}}</td>
                 <td>{{this.cab.dataValues.driver.dataValues.driver_name}}</td>
+                <td><a href="/profile/invoice?ride_otp={{this.ride_otp}}" style="text-decoration: underline; color : white;">INVOICE</a></td>
             </tr>
         {{/each}}
         </tbody>

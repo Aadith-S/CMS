@@ -1,5 +1,6 @@
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
+const puppeteer = require("puppeteer");
 let cost = 0
 function viewAllBookings(page,user_id){
     return new Promise((res,rej)=>{
@@ -126,7 +127,8 @@ module.exports = {
                     model : db.Location,
                     required : true
                 }
-            }).then((result) => { console.log(result); let content = renderTemplate("invoice",{isAuthenticated : req.identity.isAuthenticated,data : result.dataValues });
+            }).then((result) => { console.log(result);
+            let content = renderTemplate("invoice",{isAuthenticated : req.identity.isAuthenticated,data : result.dataValues });
             res.send(content);})
             
         }
@@ -170,5 +172,41 @@ module.exports = {
                 res.send(content);
                 })
         }
-    }
+    },
+    invoicepdf : async(req, res) => {
+        if(req.method == "GET"){
+            const result = await db.Bookride.findByPk(req.query.ride_otp,{
+                include : {
+                    model : db.Location,
+                    required : true
+                }
+            })
+            console.log(result);
+            let content = renderTemplate("invoicepdf",{data : result.dataValues });
+            const options = {
+                format: "A4",
+                headerTemplate: "<p></p>",
+                footerTemplate: "<p></p>",
+                displayHeaderFooter: false,
+                margin: {
+                  top: "40px",
+                  bottom: "0px",
+                },
+                printBackground: true
+              };
+            const finalHtml = encodeURIComponent(content);
+
+            const browser = await puppeteer.launch({
+            args: ["--no-sandbox"],
+            headless: true,
+            });
+            const page = await browser.newPage();
+            await page.goto(`data:text/html;charset=UTF-8,${finalHtml}`, {
+            waitUntil: "networkidle0",
+            });
+            const pdf = await page.pdf(options);
+            res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length })
+            res.send(pdf);  
+                }
+            }
 }

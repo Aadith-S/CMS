@@ -9,6 +9,7 @@ router.post("/delete",pc.delete);
 router.get("/bookCab",pc.bookpage);
 router.post("/bookCab",pc.bookpage);
 router.get("/invoice",pc.invoice);
+router.get("/invoicepdf",pc.invoicepdf);
 router.get('/payment',pc.payment);
 router.post('/payment',pc.payment);
 router.get('/allbookings',pc.userBookings);

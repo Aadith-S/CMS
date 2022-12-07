@@ -93,7 +93,7 @@ function viewAllBookingsPost(page,date){
             }
         ],
          where : {
-            date_of_booking : date
+            date_of_ride : date
         }
         }
     }
