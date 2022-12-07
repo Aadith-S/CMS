@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>Cab</title>
+  <title>Title</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/css/signup.css">
+    <link rel="stylesheet" href="/static/css/booking.css">
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -17,43 +17,40 @@
 {{>navbar}}
 <div class="container-fluid mb-3 d-flex flex-row justify-content-center" id="cabbody" >
     <img src="/static/css/yellow-cars-city-taxi_566596-23 (1).jpeg" alt="" class="cabimg">
-	<div class="w-50 d-inline-block py-3 shadow-lg rounded-4 border border-2 "id="cablogin">
-	<div class="py-3">
-		<p class="h1 text-center">Add Driver</p>
-	</div>
-	<div class="row" >
-		<div class="col-sm-6 offset-sm-3">
-			<form onsubmit="validate(event);" id="loginForm" action="" method="post">
-				<div>
-					<input type="text" class="form-control border border-bottom-3 mb-2 shadow-sm" name="driver_name" id="driver_name" placeholder="Driver Name">
-				</div>
-                <div class="my-2 ms-1">
-                    <label for="gender" class="me-2">Gender :</label>
-                    <input type="radio" name="gender" id="Male" value="M">Male
-                    <input type="radio" name="gender" id="Female" value="F">Female
-                </div>
-                <div class="ms-1">
-                    <label for="driver_address">Address :</label>
-                    <textarea name="driver_address" id="driver_address" cols="36" rows="5" placeholder="Your driver's address"style="border-width:2px" class="mt-2"></textarea> 
-                </div>
-                <div>
-                    <label for="dob">DOB :</label>
-                    <input type="date" name="dob" id="dob" >
-                </div>
-                <div>
-					<input type="text" class="form-control border border-bottom-3 my-2 shadow-sm" name="mobile" id="pNo" placeholder="Phone Number">
-				</div>
-                <div><label for="pref">Yes i agree to the <span class="text-info">terms and conditions</span></label>
-                <input type="checkbox" name="Pref" id="mail">
-                </div>
-				<div  class="d-grid gap-2 col-6 mx-auto my-2 " >
-					<input class="btn btn-primary" type="submit" value="Add Driver" id="btnLogin">
-				</div>
-			</form>
-		</div>
-	</div>
-	</div>
+	<div id = "cabtable">
+    <table class="table table-dark table-striped">
+        <thead  class="thead-dark">
+        <tr>
+            <th>Driver id</th>
+            <th>Driver Name</th>
+            <th>Driver Address</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Mobile</th>
+            <th><a style="text-decoration: none;color : white">Assign As Driver</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each info.data}}
+            <tr>
+                <td>{{this.user_id}}</td>
+                <td>{{this.f_name}} {{this.l_name}}</td>
+                <td>{{this.address}}</td>
+                <td>{{this.gender}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.mobile}}</td>
+                <td><a href="/admin/driverAdd/{{this.user_id}}" style="color : white">Select</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    </div>
 </div>
+    <ul class="pagination ms-5" id="pageele" style="padding-bottom : 50px">
+        <li class="page-item"><a class="page-link" href="?page={{info.prevPage}}"><<</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{info.currentPage}}">{{info.currentPage}}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{info.nextPage}}">>></a></li>
+    </ul>
 {{>footer}}
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -63,7 +60,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
   </script>
-  <script src="/static/scripts/signup.js"></script>
 </body>
 
 </html>

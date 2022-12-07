@@ -7,7 +7,7 @@ router.get("/driverDelete",admin.delete);
 router.get("/driverUpdate",admin.update);
 router.get("/viewAllUsers",admin.viewAllUsers)
 router.get("/viewAllDrivers",admin.viewAllDrivers)
-router.post("/driverAdd",admin.add);
+router.get("/driverAdd/:driver_id",admin.adddriver);
 router.post("/driverDelete",admin.delete);
 router.post("/driverUpdate",admin.update);
 router.get("/selectCab",admin.selectCab);

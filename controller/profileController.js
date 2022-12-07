@@ -9,8 +9,9 @@ function viewAllBookings(page,user_id){
     [{
         model : db.Cab,
         required : true,
-        include : { model : db.Driver,
+        include : { model : db.Customer,
                     required : true,
+                    where : {driver : 1}
                 }
         },
         {

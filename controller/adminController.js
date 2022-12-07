@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 const cc = require("./customerController")
@@ -8,8 +9,9 @@ function viewAllBookings(page){
     [{
         model : db.Cab,
         required : true,
-        include : { model : db.Driver,
-                    required : true
+        include : { model : db.Customer,
+                    required : true,
+                    where : { driver : 1}
                 }
         },
         {
@@ -58,8 +60,9 @@ function viewAllBookingsPost(page,date){
             [{
                 model : db.Cab,
                 required : true,
-                include : { model : db.Driver,
-                            required : true
+                include : { model : db.Customer,
+                            required : true,
+                            where : {driver : 1}
                         }
                 },
                 {
@@ -79,8 +82,9 @@ function viewAllBookingsPost(page,date){
         [{
             model : db.Cab,
             required : true,
-            include : { model : db.Driver,
-                        required : true
+            include : { model : db.Customer,
+                        required : true,
+                        where : {driver : 1}
                     }
             },
             {
@@ -128,7 +132,7 @@ function viewAllBookingsPost(page,date){
 function viewAllUsers(page){
     return new Promise((res,rej)=>{
         db.Customer.findAll({
-        attributes : ["user_id","user_name","f_name","l_name","email","gender","address","dob","mobile"]}).then((result)=>{
+        attributes : ["user_id","user_name","f_name","l_name","email","gender","address","dob","mobile"], where : {driver : 0 ,admin : 0}}).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -156,7 +160,7 @@ function viewAllUsers(page){
 }
 function viewAllDrivers(page){
     return new Promise((res,rej)=>{
-        db.Driver.findAll().then((result)=>{
+        db.Customer.findAll({where : {driver : 1}}).then((result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -194,9 +198,11 @@ function assignDriver(cab_no,driver_id){
 function getCab(page){
     return new Promise((res,rej)=>{
         db.Cab.findAll({include : {
-            model : db.Driver,
-            required : false
+            model : db.Customer,
+            required : false,
+            where : {driver : 1}
         }}).then((result)=>{
+            console.log(result);
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -221,32 +227,6 @@ function getCab(page){
             res(body);
         })
     })
-}
-function driverUpdate(driver_id,details){
-    return new Promise((res,rej)=>{
-    db.Driver.update(details,{where :{driver_id :driver_id}}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
-        rej(err);
-    })
-    })
-}
-
-function deleteDriver(driver_id){
-    return new Promise((res,rej)=>{
-        db.Driver.destroy({where: {driver_id:driver_id }}).then((result)=>{console.log(result); res("success")}).catch((err)=>{
-            rej(err);
-    })
-    })
-}
-function addDriver(driver){
-    return new Promise((res,rej)=>{
-    db.Driver.create({
-        driver_name : driver.driver_name,
-        driver_address : driver.driver_address,
-        gender : driver.gender,
-        dob : driver.dob,
-        mobile : driver.mobile
-    }).then((result)=>{res(result)}); 
-})
 }
 function addCab(cab){
     return new Promise((res,rej)=>{
@@ -341,13 +321,34 @@ module.exports = {
         }
     },
     add : (req,res)=>{
-        if(req.method == 'GET'){
-            let content = renderTemplate("driveradd",{isAuthenticated : req.identity.isAuthenticated});
+        let page = {page : 1}
+        if(req.method == "GET"){
+            if(Object.keys(req.query).length != 0){
+                page = req.query;
+            }
+        viewAllUsers(parseInt(page.page)).then((body)=>{
+            let prevPage = page.page<=1?1:parseInt(page.page)-1;
+            let nextPage = page.page>=body.pages?body.pages:parseInt(page.page)+1;
+            let info = {
+                data : body.data,
+                prevPage : prevPage,
+                currentPage : parseInt(page.page),
+                nextPage : nextPage,
+            }
+            console.log(info);
+            let data = {
+                info : info,
+                isAuthenticated : req.identity.isAuthenticated
+            }
+            let content = renderTemplate("driveradd",data);
             res.send(content);
+            })
         }
-        else{
-            addDriver(req.body).then(() =>res.redirect("/admin/viewAllDrivers")).catch(() =>res.redirect("/driverAdd"));
-        }
+    },
+    adddriver : async(req, res)=>{
+        let driver_id =req.params.driver_id;
+        await db.Customer.update({driver : 1},{where : {user_id : driver_id}})
+        res.redirect("/profile")
     },
     assignDriver : (req, res) =>{
         if(req.method == 'GET'){

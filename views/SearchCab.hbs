@@ -39,7 +39,7 @@
                 <td>{{this.cab_description}}</td>
                 <td>{{this.cab_totalSeating}}</td>
                 <td>100</td>
-                <td><a href="/driverdetails?driver_id={{this.driver_id}}" style="text-decoration: underline; color : white">{{this.driver.dataValues.driver_name}}</a></td>
+                <td><a href="/driverdetails?driver_id={{this.driver_id}}" style="text-decoration: underline; color : white">{{this.customer.dataValues.f_name}} {{this.customer.dataValues.l_name}}</a></td>
                 <td><a href="/profile/bookCab?cab_no={{this.cab_no}}">Book Now</a></td>
             </tr>
         {{/each}}

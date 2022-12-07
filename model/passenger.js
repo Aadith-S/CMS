@@ -47,7 +47,11 @@ const Customer = sequelize.define("customer",{
         allowNull : false
     },
     admin : {
-        type : DataTypes.INTEGER,
+        type : DataTypes.BOOLEAN,
+        allowNull : false
+    },
+    driver : {
+        type : DataTypes.BOOLEAN,
         allowNull : false
     }
 })
@@ -69,41 +73,9 @@ const Cab = sequelize.define("cab",{
         type : DataTypes.STRING(150),
         allowNull : false
     },
-    etc : {
-        type : DataTypes.STRING(150),
-        allowNull : true
-    },
     driver_id :{
         type : DataTypes.INTEGER,
         allowNull : true
-    }
-})
-const Driver = sequelize.define("driver",{
-    
-    driver_id : {
-        type : DataTypes.INTEGER,
-        primaryKey : true,
-        autoIncrement : true
-    },
-    driver_name : {
-        type : DataTypes.STRING(50),
-        allowNull : false
-    },
-    driver_address : {
-        type : DataTypes.STRING(100),
-        allowNull : false
-    },
-    mobile : {
-        type : DataTypes.STRING(10),
-        allowNull : false
-    },
-    gender : {
-        type : DataTypes.STRING(1),
-        allowNull : false,
-    },
-    dob : {
-        type : DataTypes.DATE,
-        allowNull : false
     }
 })
 const Bookride = sequelize.define("bookride",{
@@ -160,13 +132,13 @@ const Location = sequelize.define("location",{
         allowNull : false
     }
 })
-Driver.hasOne(Cab,{
+Customer.hasOne(Cab,{
     foreignKey : "driver_id",
-    sourceKey : "driver_id"
+    sourceKey : "user_id"
 })
-Cab.belongsTo(Driver,{
+Cab.belongsTo(Customer,{
     foreignKey : "driver_id",
-    targetKey : "driver_id"
+    targetKey : "user_id"
 })
 Customer.hasMany(Bookride,{
     foreignKey : "user_id",
@@ -195,7 +167,6 @@ Bookride.belongsTo(Location,{
 module.exports = {
     Customer,
     Cab,
-    Driver,
     Bookride,
     Location
 }

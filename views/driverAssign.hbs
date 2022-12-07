@@ -33,13 +33,13 @@
         <tbody>
         {{#each info.data}}
             <tr>
-                <td>{{this.driver_id}}</td>
-                <td>{{this.driver_name}}</td>
-                <td>{{this.driver_address}}</td>
+                <td>{{this.user_id}}</td>
+                <td>{{this.f_name}} {{this.l_name}}</td>
+                <td>{{this.address}}</td>
                 <td>{{this.gender}}</td>
                 <td>{{this.dob}}</td>
                 <td>{{this.mobile}}</td>
-                <td><a href="/admin/cabset?driver_id={{this.driver_id}}" style="color : white">Select</a></td>
+                <td><a href="/admin/cabset?driver_id={{this.user_id}}" style="color : white">Select</a></td>
             </tr>
         {{/each}}
         </tbody>

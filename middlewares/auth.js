@@ -1,10 +1,11 @@
-const db = require("./model/passenger");
+const db = require("../model/passenger");
 
 module.exports = async (req, res,next)=>{
     req.identity = {
         isAuthenticated: false,
         user : null
     }
+    console.log(req.url);
     if(req.url == "/login" || req.url == "/signup"){
         return next();
     }
@@ -16,7 +17,7 @@ module.exports = async (req, res,next)=>{
         }
        return res.redirect("/login") 
     }
-    let userDetails = await db.Customer.findByPk(user_id);
+    var userDetails = await db.Customer.findByPk(user_id);
     if(!userDetails || userDetails == null){
         return res.redirect("/login")
     }
@@ -32,9 +33,30 @@ module.exports = async (req, res,next)=>{
         gender : userDetails.gender,
         admin : userDetails.admin
     };
-    return next();
+    console.log("Yes");
+    if(req.session.driver == 1){
+        console.log(req.url);
+        if(req.url.startsWith("/driver") || req.url == "/index"||req.url == "/logout"){
+            return next();
+        }
+        else{
+            return res.redirect("/driver/profile");
+        }
     }
-    // if(req.url == "/index"){
-    //     return next();
-    // }
+    else{
+        console.log("In admin");
+        if(req.session.admin == 0){
+            if(req.url.startsWith("/admin")){
+                return res.redirect("/profile");
+            }
+            else{
+                return next();
+            }
+        }
+        else{
+            console.log("line 51");
+            return next();
+        }
+    }
+    }
 }

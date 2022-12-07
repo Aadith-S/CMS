@@ -7,7 +7,7 @@ function authentication(uname,pass)
         user_name : uname,
         password : pass
         },
-    attributes : ["user_id"]}).then((result)=>{
+    attributes : ["user_id","admin","driver"]}).then((result)=>{
             console.log(result);
             if(result == null)
             {
@@ -15,7 +15,7 @@ function authentication(uname,pass)
             }
             else{
             console.log("Logged In Successfully");
-            resolve(result.dataValues.user_id);
+            resolve(result.dataValues);
             }
         }).catch(err=>{
             console.log("Error: " + err);
@@ -33,7 +33,8 @@ function addCustomer(user){
         email : user.email,
         user_name : user.userName,
         password : user.pass,
-        admin : 0
+        admin : 0,
+        driver : 0
     }).then((result)=>{
         console.log(result);
     }).catch((err)=>{
@@ -46,10 +47,12 @@ function getCab(page){
         db.Cab.findAll({
         attributes : ["cab_no","cab_name","cab_description","cab_totalSeating","driver_id"],where : {driver_id : {[Op.not]:null}},
         include : {
-            model : db.Driver,
-            required : true
+            model : db.Customer,
+            required : true,
+            where : { driver : 1}
         }
         }).then((result)=>{
+            console.log(result);
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -76,7 +79,7 @@ function getCab(page){
 }
 function driverdetails(driver_id){
     return new Promise((res,rej)=>{
-        db.Driver.findByPk(driver_id).then((result)=>{
+        db.Customer.findOne({where : {user_id : driver_id}}).then((result)=>{
             console.log(result);
             if(result == null){
             res(0);
@@ -99,7 +102,12 @@ module.exports = {
         res.send(content);
         }
         else{
-        authentication(req.body.userName,req.body.passWord).then((id)=>{req.session.user_id=id; res.redirect("/profile")}).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
+        authentication(req.body.userName,req.body.passWord).then((result)=>{
+        req.session.user_id=result.user_id;
+        req.session.driver=result.driver;
+        req.session.admin = result.admin;
+        res.redirect("/profile");
+        }).catch(()=>{let content = renderTemplate("login",{err : "Incorrect Username or Password"});
         res.send(content);});
         }
     },
@@ -158,5 +166,6 @@ module.exports = {
         req.session.user_id = null;
         res.redirect("/login");
     },
-    getCab : getCab
+    getCab : getCab,
+    authentication : authentication
 }
