@@ -51,7 +51,8 @@ module.exports = {
     profile : async(req,res)=>{
         let info = {
             info : req.identity.user,
-            isAuthenticated : req.identity.isAuthenticated
+            isAuthenticated : req.identity.isAuthenticated,
+            id : req.session.user_id
         }
         console.log(info);
         let content = renderTemplate('driverprofile',info);
@@ -83,5 +84,27 @@ module.exports = {
                 res.send(content);
                 })
         }
-    }
+    },
+    update : (req,res)=>{
+        if(req.method == 'POST'){
+            driverUpdate(req.query.driver_id,req.body).then((result)=>{
+                res.redirect("/driver/profile");
+            }).catch((err)=>{
+                console.log(err);
+            });
+        }
+        else{
+            let content = renderTemplate("driverUpdate",{isAuthenticated : req.identity.isAuthenticated,driver_id: req.query.driver_id});
+            res.send(content);
+        }
+    },
+    delete: (req,res)=>{
+        if(req.method == 'POST'){
+        deleteDriver(req.query.driver_id).then((result)=>{res.redirect("/driver/profile");}).catch((err)=>{console.log(err);});
+        }
+        else{
+            let content = renderTemplate("DriverDelete",{isAuthenticated : req.identity.isAuthenticated,driver_id: req.query.driver_id});
+            res.send(content);
+        }
+    },
 }

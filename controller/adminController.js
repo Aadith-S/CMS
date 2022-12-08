@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const {Sequelize} = require("sequelize");
 const db = require("../model/passenger");
 const renderTemplate = require("../views/view")
 const cc = require("./customerController")
@@ -23,7 +23,7 @@ function viewAllBookings(page){
             required : true
         }
     ]}
-    ).then((result)=>{
+    ).then(async(result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -103,7 +103,7 @@ function viewAllBookingsPost(page,date){
     }
     return new Promise((res,rej)=>{
         db.Bookride.findAll(obj
-    ).then((result)=>{
+    ).then(async (result)=>{
             let data = [];
             let pages = Math.ceil(result.length/5)
             if(page<1){
@@ -121,6 +121,12 @@ function viewAllBookingsPost(page,date){
                 data.push(result[i].dataValues)
             }
             }
+            // let cost = await db.Bookride.findAll({
+            //     attributes: [[sequelize.fn('sum', sequelize.col('cost')), 'total']],
+            //     raw: true,
+            // });
+            // console.log("above cost");
+            // console.log(cost);
             let body ={
                 data : data,
                 pages : pages
